@@ -79,10 +79,11 @@ final class DisplayClock {
 
     private func idleTick(grid: CharacterGrid) {
         let all = grid.allPanels()
+        guard !all.isEmpty else { return }
+
         let flipCount = max(1, Int(Double(all.count) * idleDensity))
-        
-        // O(k) random selection instead of O(n) shuffle + allocation
-        // Reservoir sampling: pick k unique random indices without shuffling entire array
+
+        // O(k) random selection instead of O(n) shuffle + allocation.
         var selectedIndices = Set<Int>()
         while selectedIndices.count < flipCount {
             selectedIndices.insert(Int.random(in: 0..<all.count))
